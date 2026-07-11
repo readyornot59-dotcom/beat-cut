@@ -5,6 +5,7 @@ from typing import List
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from runwayml import APIError as RunwayAPIError
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -100,6 +101,8 @@ async def cut_ai(music: UploadFile = File(...), prompt: str = Form(...), num_sce
         return _process_job(job_id, work_dir, music_path, ai_clip_paths)
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
+    except RunwayAPIError as e:
+        raise HTTPException(status_code=502, detail=f"Runway API error: {e.message}")
     finally:
         shutil.rmtree(job_dir, ignore_errors=True)
 
