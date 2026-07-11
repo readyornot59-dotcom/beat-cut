@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>beat-cut</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>beat-cut</h1>
+    <p class="subtitle">Auto-cut video clips to the beat of your music.</p>
+
+    <form id="cut-form">
+      <label class="field">
+        <span>Music track</span>
+        <input type="file" id="music" accept="audio/*" required />
+      </label>
+
+      <div class="field">
+        <span>Video source</span>
+        <div class="mode-toggle">
+          <label><input type="radio" name="mode" value="upload" checked /> Upload my own clips</label>
+          <label><input type="radio" name="mode" value="ai" /> Generate with AI (no clips needed)</label>
+        </div>
+      </div>
+
+      <label class="field" id="clips-field">
+        <span>Video clips (in order)</span>
+        <input type="file" id="clips" accept="video/*" multiple />
+      </label>
+
+      <div id="ai-fields" class="hidden">
+        <label class="field">
+          <span>Scene prompt</span>
+          <input type="text" id="prompt" placeholder="neon cyberpunk city at night, rain, driving" />
+        </label>
+        <label class="field">
+          <span>Number of scenes</span>
+          <input type="number" id="num-scenes" min="1" max="8" value="4" />
+        </label>
+        <p class="hint">Requires a Runway API key configured on the server. Generation costs money and can take a few minutes.</p>
+      </div>
+
+      <button type="submit" id="submit-btn">Cut to the beat</button>
+    </form>
+
+    <div id="status" class="status"></div>
+
+    <div id="result" class="result hidden">
+      <video id="result-video" controls></video>
+      <a id="download-link" download>Download video</a>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
