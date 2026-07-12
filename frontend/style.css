@@ -90,19 +90,63 @@ button:disabled {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+textarea {
   padding: 0.5rem;
   border-radius: 6px;
   border: 1px solid currentColor;
   background: transparent;
   color: inherit;
   font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
 }
 
 .hint {
   font-size: 0.85rem;
   opacity: 0.7;
   margin: 0.25rem 0 0;
+}
+
+.progress {
+  margin-top: 1.5rem;
+}
+
+.progress.hidden {
+  display: none;
+}
+
+.progress-top-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-bottom: 0.4rem;
+}
+
+.progress-bar-track {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(127, 127, 127, 0.25);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: #4f46e5;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-bar-fill.indeterminate {
+  width: 40% !important;
+  animation: indeterminate-slide 1.2s ease-in-out infinite;
+}
+
+@keyframes indeterminate-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
 }
 
 video {

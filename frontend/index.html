@@ -20,7 +20,8 @@
         <span>Video source</span>
         <div class="mode-toggle">
           <label><input type="radio" name="mode" value="upload" checked /> Upload my own clips</label>
-          <label><input type="radio" name="mode" value="ai" /> Generate with AI (no clips needed)</label>
+          <label><input type="radio" name="mode" value="ai" /> Turn music into AI video</label>
+          <label><input type="radio" name="mode" value="visualizer" /> Generate a visualizer (free, no clips needed)</label>
         </div>
       </div>
 
@@ -31,20 +32,38 @@
 
       <div id="ai-fields" class="hidden">
         <label class="field">
-          <span>Scene prompt</span>
-          <input type="text" id="prompt" placeholder="neon cyberpunk city at night, rain, driving" />
+          <span>Scene prompts (one per line)</span>
+          <textarea id="prompt" rows="4" placeholder="neon cyberpunk city at night, rain, driving&#10;same city, close-up on the driver&#10;rooftop view of the skyline at dawn"></textarea>
         </label>
         <label class="field">
           <span>Number of scenes</span>
           <input type="number" id="num-scenes" min="1" max="8" value="4" />
         </label>
-        <p class="hint">Requires a Runway API key configured on the server. Generation costs money and can take a few minutes.</p>
+        <p class="hint">One line = one distinct shot, cycled to fill the scene count above. A single repeated line reuses the same cached clip instead of paying for a new generation — vary the wording slightly for deliberate variety. Requires a Runway API key configured on the server; generation costs money and can take a few minutes.</p>
+      </div>
+
+      <div id="visualizer-fields" class="hidden">
+        <label class="field">
+          <span>Number of visual styles</span>
+          <input type="number" id="num-styles" min="1" max="4" value="3" />
+        </label>
+        <p class="hint">Free and local — renders audio-reactive visuals (spectrum, waveform, etc.) with ffmpeg and cuts between styles on the beat.</p>
       </div>
 
       <button type="submit" id="submit-btn">Cut to the beat</button>
     </form>
 
     <div id="status" class="status"></div>
+
+    <div id="progress" class="progress hidden">
+      <div class="progress-top-row">
+        <span id="progress-stage">Starting...</span>
+        <span id="progress-timer">0:00</span>
+      </div>
+      <div class="progress-bar-track">
+        <div id="progress-bar-fill" class="progress-bar-fill indeterminate"></div>
+      </div>
+    </div>
 
     <div id="result" class="result hidden">
       <video id="result-video" controls></video>
